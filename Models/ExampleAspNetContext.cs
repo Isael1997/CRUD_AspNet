@@ -18,12 +18,13 @@ namespace CRUD_ASPNET.Models
 
         public virtual DbSet<Beer> Beers { get; set; } = null!;
         public virtual DbSet<Brand> Brands { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+///#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
 //                optionsBuilder.UseSqlServer("server=localhost; database=ExampleAspNet; integrated security=true;");
             }
         }
@@ -69,6 +70,25 @@ namespace CRUD_ASPNET.Models
                 entity.Property(e => e.NameB)
                     .HasMaxLength(1)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("users");
+
+                entity.Property(e => e.Clave)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("clave");
+
+                entity.Property(e => e.Fecha)
+                    .HasColumnType("date")
+                    .HasColumnName("fecha");
+
+                entity.Property(e => e.NameUser)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("name_user");
             });
 
             OnModelCreatingPartial(modelBuilder);
